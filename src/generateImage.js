@@ -7,9 +7,9 @@ if (!fs.existsSync("./tmp")) {
 
 async function generateImage(id,prompt) {
   const outputDir = `output/${id}`;
-
+  prompt = "mdjrny-v4 style," + prompt;
   await new Promise((resolve) => {
-    const options = ["--model", "SD-2.1", "--outdir", outputDir, prompt];
+    const options = ["--model", "openjourney-v4", "--outdir", outputDir, prompt];
 
     const cmd = spawn("imagine", options);
 

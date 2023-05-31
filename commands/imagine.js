@@ -23,18 +23,17 @@ module.exports = {
       : interaction.options.getString("prompt");
 
     await interaction.deferReply();
-
     const { file } = await generateImage(interaction.id, prompt);
+    const embed = {
+      title: "Made by @" + interaction.user.tag, // Discord tag
+      description: prompt, // Prompt
+      image: {
+        url: "attachment://image.jpg",
+      },
+    };
 
     await interaction.editReply({
-      embeds: [
-        {
-          title: prompt,
-          image: {
-            url: "attachment://image.jpg",
-          },
-        },
-      ],
+      embeds: [embed],
       files: [new AttachmentBuilder(file, "image.jpg")],
       components: [
         new ActionRowBuilder().addComponents(
@@ -42,6 +41,7 @@ module.exports = {
             .setCustomId(prompt)
             .setLabel("Try again!")
             .setStyle(ButtonStyle.Primary)
+            .setEmoji("🔁")
         ),
       ],
     });
